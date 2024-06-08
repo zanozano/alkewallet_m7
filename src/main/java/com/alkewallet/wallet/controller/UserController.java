@@ -22,9 +22,16 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String registerUser(User user, Model model) {
-        userService.save(user);
+    @PostMapping("/create")
+    public String createUser(User user, Model model) {
+        userService.postUser(user.getEmail(), user.getPassword());
         return "redirect:/login";
     }
 }
+
+
+
+
+
+
+
