@@ -9,13 +9,21 @@
     <title>Alkewallet</title>
 </head>
 <body>
-<nav class="navbar bg-purple-900 text-white h-16 px-6 flex justify-between items-center">
-    <div class="navbar-brand text-xl font-bold">Alkewallet</div>
+<nav class="navbar fixed w-full bg-purple-900 text-white h-16 px-6 flex justify-between items-center">
+    <div class="navbar-brand text-xl font-bold">
+        <a href="/">Alkewallet</a>
+    </div>
     <div class="navbar-links space-x-4">
         <a href="/login" class="text-gray-300 hover:text-gray-100">Login</a>
         <a href="/signup" class="text-gray-300 hover:text-gray-100">Sign Up</a>
     </div>
 </nav>
+
+<main id="content">
+    <div th:replace="|${content}|"></div>
+</main>
+
+
 
 
 </body>

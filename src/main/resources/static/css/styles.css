@@ -1,3 +1,9 @@
 body {
-background: #fffff;
+    background: #fafafa;
+}
+
+.fancy-shadow {
+    background: #fafafa;
+    box-shadow:  20px 20px 44px #dcdcdc,
+                 -20px -20px 44px #ffffff;
 }
