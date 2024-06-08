@@ -15,14 +15,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+    // user session
+    public boolean authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return user != null && user.getPassword().equals(password);
     }
 
+    // get user
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    // create user
     public void postUser(String email, String password) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
         userRepository.save(user);
     }
+
 }
