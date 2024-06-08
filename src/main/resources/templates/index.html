@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Alkewallet</title>
 </head>
 <body>
+<nav class="navbar bg-purple-900 text-white h-16 px-6 flex justify-between items-center">
+    <div class="navbar-brand text-xl font-bold">Alkewallet</div>
+    <div class="navbar-links space-x-4">
+        <a href="#login" class="text-gray-300 hover:text-gray-100">Login</a>
+        <a href="#signup" class="text-gray-300 hover:text-gray-100">Sign Up</a>
+    </div>
+</nav>
 
 <div th:include="views/home.html"></div>
 
