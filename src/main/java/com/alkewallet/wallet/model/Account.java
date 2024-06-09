@@ -2,24 +2,22 @@ package com.alkewallet.wallet.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
+@Setter
+@Getter
 @Entity
 @Table(name = "accounts")
 public class Account {
 
-    @Setter
-    @Getter
-    private String accountId;
+    @Id
+    private UUID id;
 
-    @Setter
-    @Getter
+    private UUID userId;
+
     private String currencyCode;
-
-    @Setter
-    @Getter
-    private double amount;
-
-
 }

@@ -33,5 +33,4 @@ public class UserService {
         user.setPassword(password);
         userRepository.save(user);
     }
-
 }
