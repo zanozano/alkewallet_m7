@@ -14,10 +14,17 @@
         <a href="/">Alkewallet</a>
     </div>
     <div class="navbar-links space-x-4">
-        <a href="/login" class="text-gray-300 hover:text-gray-100">Login</a>
-        <a href="/signup" class="text-gray-300 hover:text-gray-100">Sign Up</a>
+        <div th:if="${session.user != null}" class="flex gap-6">
+            <a href="/account" class="text-gray-300 hover:text-gray-100">Account</a>
+            <a href="/logout" class="text-gray-300 hover:text-gray-100">Logout</a>
+        </div>
+        <div th:unless="${session.user != null}" class="flex gap-6">
+            <a href="/login" class="text-gray-300 hover:text-gray-100">Login</a>
+            <a href="/signup" class="text-gray-300 hover:text-gray-100">Sign Up</a>
+        </div>
     </div>
 </nav>
+
 
 <main class="w-full min-h-screen flex justify-center items-center px-6 py-16" id="content">
     <div th:replace="~{|${content}|}"></div>

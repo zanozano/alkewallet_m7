@@ -1,7 +1,6 @@
 package com.alkewallet.wallet.controller;
 
 import com.alkewallet.wallet.model.Account;
-import com.alkewallet.wallet.model.Transaction;
 import com.alkewallet.wallet.model.User;
 import com.alkewallet.wallet.service.AccountService;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +29,13 @@ public class AccountController {
         }
         List<Account> accounts = accountService.getUserAccounts(user.getEmail());
         model.addAttribute("accounts", accounts);
-        return "accountView";
+        model.addAttribute("content", "account");
+        return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }
