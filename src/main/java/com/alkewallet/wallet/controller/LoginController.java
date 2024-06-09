@@ -26,11 +26,16 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(User user) {
+    public String login(User user, Model model) {
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Password: " + user.getPassword());
+
         if (userService.authenticate(user.getEmail(), user.getPassword())) {
             return "redirect:/account";
         } else {
+            model.addAttribute("error", "Invalid email or password");
             return "redirect:/login?error";
         }
     }
+
 }
