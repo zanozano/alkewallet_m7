@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
 
@@ -39,5 +44,11 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         userRepository.save(user);
+    }
+
+    public Map<UUID, String> getEmailsForUserIds(List<UUID> userIds) {
+        List<User> users = userRepository.findByIdIn(userIds);
+        return users.stream()
+                .collect(Collectors.toMap(User::getId, User::getEmail));
     }
 }

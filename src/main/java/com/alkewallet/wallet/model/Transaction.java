@@ -22,9 +22,9 @@ public class Transaction {
 
     private Date transactionDate;
 
-    private String senderId;
+    private UUID senderId;
 
-    private String receiverId;
+    private UUID receiverId;
 
     private String currencyCode;
 
