@@ -1,11 +1,10 @@
 package com.alkewallet.wallet.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -20,4 +19,7 @@ public class Account {
     private UUID userId;
 
     private String currencyCode;
+
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Balance> balances;
 }

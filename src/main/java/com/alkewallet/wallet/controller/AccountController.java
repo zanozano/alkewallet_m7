@@ -1,6 +1,7 @@
 package com.alkewallet.wallet.controller;
 
 import com.alkewallet.wallet.model.Account;
+import com.alkewallet.wallet.model.Balance;
 import com.alkewallet.wallet.model.User;
 import com.alkewallet.wallet.service.AccountService;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,9 +30,17 @@ public class AccountController {
             return "redirect:/login";
         }
         List<Account> accounts = accountService.getUserAccounts(user.getEmail());
-        model.addAttribute("accounts", accounts);
+        model.addAttribute("balances", getBalancesFromAccounts(accounts));
         model.addAttribute("content", "account");
         return "index";
+    }
+
+    private List<Balance> getBalancesFromAccounts(List<Account> accounts) {
+        List<Balance> balances = new ArrayList<>();
+        for (Account account : accounts) {
+            balances.addAll(account.getBalances());
+        }
+        return balances;
     }
 
     @GetMapping("/logout")
