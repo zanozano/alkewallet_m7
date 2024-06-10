@@ -1,88 +1,177 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Alkewallet</title>
+</head>
+<body>
 <div class="p-6 w-full flex flex-col gap-11">
- <h1 class="text-3xl font-bold mb-6">Welcome to My Account</h1>
- <div class="flex gap-6">
-  <img src="/images/avatar.png" alt="avatar" width="100px">
-  <div class="flex flex-col gap-2">
-   <p class="text-xl font-bold">Username</p>
-   <p class="text-lg font-semibold" th:text="${user.email}">Email</p>
-  </div>
- </div>
+    <h1 class="text-3xl font-bold mb-6">Welcome to My Account</h1>
+    <div class="flex gap-24">
+	  <div class="flex gap-4">
+		<img class="w-36 h-36 object-cover" src="/images/avatar.png" alt="avatar">
+		<div class="flex flex-col gap-2">
+		    <p class="text-xl font-bold">Username</p>
+		    <p class="text-lg font-semibold" th:text="${user.email}">Email</p>
+		</div>
+	  </div>
+	  <table class="divide-y divide-gray-200">
+		<thead class="bg-gray-50">
+		<tr>
+		    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</th>
+		    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+		</tr>
+		</thead>
+		<tbody class="bg-white divide-y divide-gray-200">
+		<tr th:each="balance : ${balances}">
+		    <td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+			  <div class="text-sm text-gray-900" th:text="${balance.currencyCode}">Currency Code</div>
+		    </td>
+		    <td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+			  <div class="text-sm text-gray-900" th:text="${balance.amount}">Amount</div>
+		    </td>
+		</tr>
+		<tr th:if="${#lists.isEmpty(balances)}">
+		    <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No balances available.</td>
+		</tr>
+		</tbody>
+	  </table>
+    </div>
 
- <div class="flex gap-4">
-  <table class="w-full divide-y divide-gray-200">
-   <thead class="bg-gray-50">
-   <tr>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Currency
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Amount
-    </th>
-   </tr>
-   </thead>
-   <tbody class="bg-white divide-y divide-gray-200">
-   <tr th:each="balance : ${balances}">
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${balance.currencyCode}">Currency Code</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${balance.amount}">Amount</div>
-    </td>
-   </tr>
-   <tr th:if="${#lists.isEmpty(balances)}">
-    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No balances available.</td>
-   </tr>
-   </tbody>
-  </table>
+    <div class="flex gap-4 mt-4">
+	  <button id="depositBtn" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Deposit</button>
+	  <button id="withdrawBtn" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Withdraw</button>
+	  <button id="exchangeBtn" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Exchange</button>
+    </div>
 
-  <table class="w-full divide-y divide-gray-200">
-   <thead class="bg-gray-50">
-   <tr>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Type
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Currency
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Amount
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Date
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Sender
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-     Receiver
-    </th>
-   </tr>
-   </thead>
-   <tbody class="bg-white divide-y divide-gray-200">
-   <tr th:each="transaction : ${transactions}">
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${transaction.type}">Type</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${transaction.currencyCode}">Currency Code</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${transaction.amount}">Amount</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${#dates.format(transaction.transactionDate, 'dd-MM-yyyy')}">Transaction Date</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.senderId)}">Sender</div>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.receiverId)}">Receiver</div>
-    </td>
-   </tr>
-   <tr th:if="${#lists.isEmpty(transactions)}">
-    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No transactions available.</td>
-   </tr>
-   </tbody>
-  </table>
- </div>
+    <div class="backdrop"></div>
+
+    <div id="successMessage" class="absolute top-28 right-20">
+	  <th:block th:if="${message}">
+		<div class="bg-green-500 text-white text-center py-2 px-4 rounded">
+		    <p th:text="${message}"></p>
+		</div>
+	  </th:block>
+    </div>
+
+    <div id="depositModal" class="modal bg-white hidden max-w-md w-full border p-10 rounded-xl">
+	  <div class="modal-content">
+		<div class="flex justify-between items-center mb-6">
+		    <h2 class="text-lg font-semibold">Deposit</h2>
+		    <span class="close text-xl font-semibold">&times;</span>
+		</div>
+		<form action="/deposit" method="post">
+		    <div>
+			  <label for="depositCurrency" class="block font-semibold mt-4">Currency:</label>
+			  <select id="depositCurrency" name="currencyCode" required class="w-full border rounded-md px-3 py-2 mt-1">
+				<option value="CLP">CLP</option>
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="THB">THB</option>
+				<option value="CNY">CNY</option>
+			  </select>
+		    </div>
+		    <div>
+			  <label for="depositAmount" class="block font-semibold">Amount:</label>
+			  <input type="number" id="depositAmount" name="amount" required class="w-full border rounded-md px-3 py-2 mt-1">
+		    </div>
+		    <button type="submit" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Deposit</button>
+		</form>
+	  </div>
+    </div>
+
+    <div id="withdrawModal" class="modal bg-white hidden max-w-md w-full border p-10 rounded-xl">
+	  <div class="modal-content">
+		<div class="flex justify-between items-center mb-6">
+		    <h2 class="text-lg font-semibold">Withdraw</h2>
+		    <span class="close text-xl font-semibold">&times;</span>
+		</div>
+		<form id="withdrawForm" class="flex flex-col gap-6">
+		    <div>
+			  <label for="withdrawCurrency" class="block font-semibold mt-4">Currency:</label>
+			  <select id="withdrawCurrency" name="withdrawCurrency" class="w-full border rounded-md px-3 py-2 mt-1">
+				<option value="CLP">CLP</option>
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="THB">THB</option>
+				<option value="CNY">CNY</option>
+			  </select>
+		    </div>
+		    <div>
+			  <label for="withdrawAmount" class="block font-semibold">Amount:</label>
+			  <input type="number" id="withdrawAmount" name="withdrawAmount" class="w-full border rounded-md px-3 py-2 mt-1">
+		    </div>
+		    <button id="confirmWithdrawBtn" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Withdraw</button>
+		</form>
+	  </div>
+    </div>
+
+    <div id="exchangeModal" class="modal bg-white hidden max-w-md w-full border p-10 rounded-xl">
+	  <div class="modal-content">
+		<div class="flex justify-between items-center mb-6">
+		    <h2 class="text-lg font-semibold">Exchange</h2>
+		    <span class="close text-xl font-semibold">&times;</span>
+		</div>
+		<form id="exchangeForm" class="flex flex-col gap-6">
+		    <div>
+			  <label for="exchangeCurrency" class="block font-semibold mt-4">Currency to Exchange:</label>
+			  <select id="exchangeCurrency" name="exchangeCurrency" class="w-full border rounded-md px-3 py-2 mt-1">
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="THB">THB</option>
+				<option value="CNY">CNY</option>
+			  </select>
+		    </div>
+		    <div>
+			  <label for="exchangeAmount" class="block font-semibold">Amount (CLP):</label>
+			  <input type="number" id="exchangeAmount" name="exchangeAmount" class="w-full border rounded-md px-3 py-2 mt-1">
+		    </div>
+		    <button id="confirmExchangeBtn" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Exchange</button>
+		</form>
+	  </div>
+    </div>
+
+    <table class="w-full divide-y divide-gray-200">
+	  <thead class="bg-gray-50">
+	  <tr>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</th>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sender</th>
+		<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Receiver</th>
+	  </tr>
+	  </thead>
+	  <tbody class="bg-white divide-y divide-gray-200">
+	  <tr th:each="transaction : ${transactions}">
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${transaction.type}">Type</div>
+		</td>
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${transaction.currencyCode}">Currency Code</div>
+		</td>
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${transaction.amount}">Amount</div>
+		</td>
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${#dates.format(transaction.transactionDate, 'dd-MM-yyyy')}">Transaction Date</div>
+		</td>
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.senderId)}">Sender</div>
+		</td>
+		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
+		    <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.receiverId)}">Receiver</div>
+		</td>
+	  </tr>
+	  <tr th:if="${#lists.isEmpty(transactions)}">
+		<td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No transactions available.</td>
+	  </tr>
+	  </tbody>
+    </table>
 </div>
+</body>
+</html>

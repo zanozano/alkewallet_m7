@@ -37,6 +37,53 @@
         </div>
     </div>
 </footer>
+<script>
+    const backdrop = document.querySelector('.backdrop');
+    const depositModal = document.getElementById('depositModal');
+    const withdrawModal = document.getElementById('withdrawModal');
+    const exchangeModal = document.getElementById('exchangeModal');
 
+    function openModal(modal) {
+      backdrop.style.display = 'block';
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      backdrop.style.display = 'none';
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+      });
+    }
+
+    document.getElementById('depositBtn').addEventListener('click', function() {
+      openModal(depositModal);
+    });
+
+    document.getElementById('withdrawBtn').addEventListener('click', function() {
+      openModal(withdrawModal);
+    });
+
+    document.getElementById('exchangeBtn').addEventListener('click', function() {
+      openModal(exchangeModal);
+    });
+
+    document.querySelectorAll('.close').forEach(closeBtn => {
+      closeBtn.addEventListener('click', function() {
+        closeModal();
+      });
+    });
+
+    backdrop.addEventListener('click', function() {
+      closeModal();
+    });
+</script>
+<script>
+    setTimeout(function() {
+	  var successMessage = document.getElementById("successMessage");
+	  if (successMessage) {
+		successMessage.style.display = "none";
+	  }
+    }, 4000);
+</script>
 </body>
 </html>
