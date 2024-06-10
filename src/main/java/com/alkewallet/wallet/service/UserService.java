@@ -46,6 +46,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // get Emails
     public Map<UUID, String> getEmailsForUserIds(List<UUID> userIds) {
         List<User> users = userRepository.findByIdIn(userIds);
         return users.stream()

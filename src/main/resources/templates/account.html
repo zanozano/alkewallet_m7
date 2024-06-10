@@ -73,10 +73,10 @@
      <div class="text-sm text-gray-900" th:text="${#dates.format(transaction.transactionDate, 'dd-MM-yyyy')}">Transaction Date</div>
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${transaction.senderId}">Sender ID</div>
+     <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.senderId)}">Sender</div>
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
-     <div class="text-sm text-gray-900" th:text="${transaction.receiverId}">Receiver ID</div>
+     <div class="text-sm text-gray-900" th:text="${userEmails.get(transaction.receiverId)}">Receiver</div>
     </td>
    </tr>
    <tr th:if="${#lists.isEmpty(transactions)}">
