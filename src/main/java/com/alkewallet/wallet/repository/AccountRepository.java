@@ -14,6 +14,5 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
 
     List<Account> findByUserId(UUID userId);
 
-    @Query("SELECT a.id FROM Account a WHERE a.userId = :userId AND a.currencyCode = :currencyCode")
-    UUID findAccountIdByUserIdAndCurrencyCode(@Param("userId") UUID userId, @Param("currencyCode") String currencyCode);
+    Account findAccountByUserIdAndCurrencyCode(UUID userId, String currencyCode);
 }

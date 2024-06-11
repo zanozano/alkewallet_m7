@@ -119,11 +119,12 @@ public class TransactionService {
         }
     }
 
+    //update balance
     private void updateBalance(UUID userId, String currencyCode, double amount, String transactionType) {
-        UUID accountId = accountRepository.findAccountIdByUserIdAndCurrencyCode(userId,currencyCode);
+        Account accountId = accountRepository.findAccountByUserIdAndCurrencyCode(userId,currencyCode);
 
         if (accountId != null) {
-            Balance balance = balanceRepository.findByAccountIdAndCurrencyCode(accountId, currencyCode);
+            Balance balance = balanceRepository.findByAccountIdAndCurrencyCode(accountId.getId(), currencyCode);
 
             if (balance != null) {
                 if ("DEPOSIT".equals(transactionType)) {

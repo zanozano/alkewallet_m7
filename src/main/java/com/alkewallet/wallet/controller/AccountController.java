@@ -6,6 +6,7 @@ import com.alkewallet.wallet.model.Balance;
 import com.alkewallet.wallet.model.User;
 import com.alkewallet.wallet.model.Transaction;
 import com.alkewallet.wallet.service.AccountService;
+import com.alkewallet.wallet.service.ExchangeService;
 import com.alkewallet.wallet.service.TransactionService;
 import com.alkewallet.wallet.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -26,12 +27,17 @@ public class AccountController {
     private final AccountService accountService;
     private final TransactionService transactionService;
     private final UserService userService;
+    private final ExchangeService exchangeService;
 
     @Autowired
-    public AccountController(AccountService accountService, TransactionService transactionService, UserService userService) {
+    public AccountController(AccountService accountService,
+                             TransactionService transactionService,
+                             UserService userService,
+                             ExchangeService exchangeService) {
         this.accountService = accountService;
         this.transactionService = transactionService;
         this.userService = userService;
+        this.exchangeService = exchangeService;
     }
 
     // map data table
@@ -95,6 +101,26 @@ public class AccountController {
 
         transactionService.withdraw(request);
         redirectAttributes.addFlashAttribute("message", "Withdrawal successful!");
+        return "redirect:/account";
+    }
+
+    @PostMapping("/exchange")
+    public String processExchange(@RequestParam("currencyCode") String currencyCode,
+                                  @RequestParam("amount") double amount,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        try {
+            exchangeService.exchangeCurrency(user.getId(), currencyCode, amount);
+            redirectAttributes.addFlashAttribute("message", "Currency exchange successful!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Currency exchange failed: " + e.getMessage());
+        }
+
         return "redirect:/account";
     }
 
