@@ -62,9 +62,9 @@
 	  <div class="modal-content">
 		<div class="flex justify-between items-center mb-6">
 		    <h2 class="text-lg font-semibold">Deposit</h2>
-		    <span class="close text-xl font-semibold">&times;</span>
+		    <span class="close text-2xl font-semibold cursor-pointer">&times;</span>
 		</div>
-		<form action="/deposit" method="post">
+		<form action="/deposit" method="post" class="flex flex-col gap-6">
 		    <div>
 			  <label for="depositCurrency" class="block font-semibold mt-4">Currency:</label>
 			  <select id="depositCurrency" name="currencyCode" required class="w-full border rounded-md px-3 py-2 mt-1">
@@ -88,12 +88,12 @@
 	  <div class="modal-content">
 		<div class="flex justify-between items-center mb-6">
 		    <h2 class="text-lg font-semibold">Withdraw</h2>
-		    <span class="close text-xl font-semibold">&times;</span>
+		    <span class="close text-2xl font-semibold cursor-pointer">&times;</span>
 		</div>
-		<form id="withdrawForm" class="flex flex-col gap-6">
+		<form action="/withdraw" method="post" class="flex flex-col gap-6">
 		    <div>
 			  <label for="withdrawCurrency" class="block font-semibold mt-4">Currency:</label>
-			  <select id="withdrawCurrency" name="withdrawCurrency" class="w-full border rounded-md px-3 py-2 mt-1">
+			  <select id="withdrawCurrency" name="currencyCode" required class="w-full border rounded-md px-3 py-2 mt-1">
 				<option value="CLP">CLP</option>
 				<option value="USD">USD</option>
 				<option value="EUR">EUR</option>
@@ -103,9 +103,9 @@
 		    </div>
 		    <div>
 			  <label for="withdrawAmount" class="block font-semibold">Amount:</label>
-			  <input type="number" id="withdrawAmount" name="withdrawAmount" class="w-full border rounded-md px-3 py-2 mt-1">
+			  <input type="number" id="withdrawAmount" name="amount" required class="w-full border rounded-md px-3 py-2 mt-1">
 		    </div>
-		    <button id="confirmWithdrawBtn" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Withdraw</button>
+		    <button type="submit" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Withdraw</button>
 		</form>
 	  </div>
     </div>
@@ -114,12 +114,12 @@
 	  <div class="modal-content">
 		<div class="flex justify-between items-center mb-6">
 		    <h2 class="text-lg font-semibold">Exchange</h2>
-		    <span class="close text-xl font-semibold">&times;</span>
+		    <span class="close text-2xl font-semibold cursor-pointer">&times;</span>
 		</div>
-		<form id="exchangeForm" class="flex flex-col gap-6">
+		<form action="/exchange" method="post" class="flex flex-col gap-6">
 		    <div>
 			  <label for="exchangeCurrency" class="block font-semibold mt-4">Currency to Exchange:</label>
-			  <select id="exchangeCurrency" name="exchangeCurrency" class="w-full border rounded-md px-3 py-2 mt-1">
+			  <select id="exchangeCurrency" name="currencyCode" required class="w-full border rounded-md px-3 py-2 mt-1">
 				<option value="USD">USD</option>
 				<option value="EUR">EUR</option>
 				<option value="THB">THB</option>
@@ -128,9 +128,9 @@
 		    </div>
 		    <div>
 			  <label for="exchangeAmount" class="block font-semibold">Amount (CLP):</label>
-			  <input type="number" id="exchangeAmount" name="exchangeAmount" class="w-full border rounded-md px-3 py-2 mt-1">
+			  <input type="number" id="exchangeAmount" name="amount" required class="w-full border rounded-md px-3 py-2 mt-1">
 		    </div>
-		    <button id="confirmExchangeBtn" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Exchange</button>
+		    <button type="submit" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:bg-purple-700 w-full">Confirm Exchange</button>
 		</form>
 	  </div>
     </div>
@@ -149,7 +149,7 @@
 	  <tbody class="bg-white divide-y divide-gray-200">
 	  <tr th:each="transaction : ${transactions}">
 		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
-		    <div class="text-sm text-gray-900" th:text="${transaction.type}">Type</div>
+		    <div class="text-sm text-gray-900 font-semibold" th:text="${transaction.type}">Type</div>
 		</td>
 		<td class="px-6 py-4 whitespace-nowrap min-h-[50px] align-middle">
 		    <div class="text-sm text-gray-900" th:text="${transaction.currencyCode}">Currency Code</div>

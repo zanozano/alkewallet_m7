@@ -29,4 +29,8 @@ public class Transaction {
     private String currencyCode;
 
     private String type;
+
+    public Date getDate() {
+        return this.transactionDate;
+    }
 }

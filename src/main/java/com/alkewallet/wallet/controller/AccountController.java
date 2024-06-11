@@ -1,7 +1,6 @@
 package com.alkewallet.wallet.controller;
 
 import com.alkewallet.wallet.dto.TransactionRequest;
-import com.alkewallet.wallet.dto.TransactionResponse;
 import com.alkewallet.wallet.model.Account;
 import com.alkewallet.wallet.model.Balance;
 import com.alkewallet.wallet.model.User;
@@ -16,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,6 +34,7 @@ public class AccountController {
         this.userService = userService;
     }
 
+    // map data table
     @GetMapping("/account")
     public String showAccountPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -48,6 +45,8 @@ public class AccountController {
         List<Account> accounts = accountService.getUserAccounts(user.getEmail());
         List<Balance> balances = getBalancesFromAccounts(accounts);
         List<Transaction> transactions = transactionService.getUserTransactions(user.getEmail());
+
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
 
         Map<UUID, String> userEmails = userService.getEmailsForUserIds(
                 transactions.stream()
@@ -73,12 +72,6 @@ public class AccountController {
         return balances;
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
-
     @PostMapping("/deposit")
     public String processDeposit(@RequestParam("currencyCode") String currencyCode,
                                  @RequestParam("amount") double amount,
@@ -92,5 +85,23 @@ public class AccountController {
         return "redirect:/account";
     }
 
+    @PostMapping("/withdraw")
+    public String processWithdraw(@RequestParam("currencyCode") String currencyCode,
+                                  @RequestParam("amount") double amount,
+                                  RedirectAttributes redirectAttributes) {
+        TransactionRequest request = new TransactionRequest();
+        request.setCurrencyCode(currencyCode);
+        request.setAmount(amount);
+
+        transactionService.withdraw(request);
+        redirectAttributes.addFlashAttribute("message", "Withdrawal successful!");
+        return "redirect:/account";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 
 }
